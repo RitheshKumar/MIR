@@ -1,0 +1,27 @@
+%% Novelty function: spectral flux
+% [nvt] = myPeakEnv(x, w, windowSize, hopSize)
+% input: 
+%   x: N by 1 float vector, input signal
+%   windowSize: int, number of samples per block
+%   hopSize: int, number of samples per hop
+% output: 
+%   nvt: n by 1 float vector, the resulting novelty function 
+
+function [nvt] = mySpectralFlux(x, windowSize, hopSize)
+
+% YOUR CODE HERE: 
+%     sampleFreq = 44100;
+    noverlap=windowSize-hopSize;
+
+    [specMat,yFreq,xTime] = mySpectrogram(x,windowSize,noverlap);
+
+    audio = audioMatrixToVector(x);
+    nfft=round(windowSize*noverlap*5); %window size etc. in seconds
+    windowSize = round(windowSize*sampleFreq);
+    noverlap = round(windowSize*sampleFreq*noverlap);
+    
+    [specMat,yFreq,xTime]=spectrogram(audio,windowSize,noverlap,nfft,sampleFreq);
+    
+    nvt = sum(diff(abs(specMat),1,2));
+
+end
