@@ -1,13 +1,17 @@
 function [zeroCrossingRate] = myZeroCrossingRate( audio, windowSize, hopSize )
 	
-	audio = audioResize( audio, windowSize, hopSize );
+	[audio, numHops] = audioResize( audio, windowSize, hopSize );
 
-	zeroCrossingRate = zeros(1, ceil( length(audio)/hopSize ) );
-	tempVar          = [0 , zeros(1, windowSize)];
+	zeroCrossingRate = zeros(1, numHops);
+% 	tempVar          = [0 , zeros(1, windowSize)];
+ 	tempVar          = zeros(1, windowSize);
 
-	for i = 1:hopSize:length(audio) - windowSize
- 		tempVar(2:end) = audio(i:i+windowSize-1);	
+	count = 1;
+
+	for i = 1:hopSize:( length(audio) - windowSize + 1 )
+ 		tempVar        = audio(i:i+windowSize-1);	
 		signs          = abs(diff(sign(tempVar)));
-		zeroCrossingRate(i) = mean(signs)/2;
+		zeroCrossingRate(count) = sum(signs)/(2*windowSize);
+		count 	       = count + 1;
 	end
 end

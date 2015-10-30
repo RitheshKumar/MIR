@@ -7,7 +7,7 @@ function [spectralCentroid] = mySpectralCentroid (specMat)
 	
 	binIndex = 0:length(specMat(:,1))-1;
 	
-    spectralCentroid = zeros(1,length(specMat(1,:)));
+	spectralCentroid = zeros(1,length(specMat(1,:)));
     
 	for k = 1: length(specMat(1,:))
 		spectralCentroid(k) = sum(magnitudeSquared(:,k).*binIndex')/sum(magnitudeSquared(:,k));

@@ -2,7 +2,7 @@
 % and then does zero padding so as to make the 
 % blocks into absolute multiples.
 
-function [resizedAudio] = audioResize ( audio, windowSize, hopSize )
+function [resizedAudio,numHops] = audioResize ( audio, windowSize, hopSize )
 	
 	audio = audioMatrixToVector(audio);   %now our audio is a vector
 
