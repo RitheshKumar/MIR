@@ -3,8 +3,8 @@ function [zeroCrossingRate] = myZeroCrossingRate( audio, windowSize, hopSize )
 	[audio, numHops] = audioResize( audio, windowSize, hopSize );
 
 	zeroCrossingRate = zeros(1, numHops);
-% 	tempVar          = [0 , zeros(1, windowSize)];
- 	tempVar          = zeros(1, windowSize);
+ 	tempVar          = [0 , zeros(1, windowSize)];
+ 	%tempVar          = zeros(1, windowSize);
 
 	count = 1;
 

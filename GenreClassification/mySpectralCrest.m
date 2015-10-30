@@ -5,8 +5,8 @@ function [spectralCrest] = mySpectralCrest (specMat)
 
 	spectralCrest = zeros(1,length(specMat(1,:)));
     
-	for k = 1: length(specMat(1,:))
-		spectralCrest(k) = max(abs(specMat(:,k)))/sum(abs(specMat(:,k)));
+	for i = 1: length(specMat(1,:))
+		spectralCrest(i) = max(abs(specMat(:,i)))/sum(abs(specMat(:,i)));
 	end
 end
 
