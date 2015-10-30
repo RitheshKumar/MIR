@@ -12,7 +12,7 @@ function [audioVector] = audioMatrixToVector(audioMatrix)
     else %if m<n    we assume that m~=n
         if m>1
            audioVector = mean(audioMatrix);       %if rows represent channels
-        elseif n==1
+        elseif m==1
             audioVector = audioMatrix;
         end
     end
