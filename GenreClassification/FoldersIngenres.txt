@@ -1,0 +1,5 @@
+classical
+country
+hiphop
+jazz
+metal
