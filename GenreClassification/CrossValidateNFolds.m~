@@ -31,9 +31,9 @@ if DiffOfFiles<EstNumFilesInAFold/2 && DiffOfFiles~=0
     
     FilesLeftInEachClass=floor(NoOfFilesInEachClass-EachGenreInEachFold*nof);
     for i=1:FilesLeftInEachClass
-        for chk=1:NoOfClasses
-            FinalFolds{i,1}=[FinalFolds{i,1},features(:,lstIter(chk)+i)];
-            FinalFolds{i,2}=[FinalFolds{i,2},GroundTruth(lstIter(chk)+i)];
+        for i=1:FilesLeftInEachClass
+            FinalFolds{i,1}=[FinalFolds{i,1},features(:,lastIter(i)+1)];
+            FinalFolds{i,2}=[FinalFolds{i,2},GroundTruth(lastIter(i)+1)];
         end    
     end
 
