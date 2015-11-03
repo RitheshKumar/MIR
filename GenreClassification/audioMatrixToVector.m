@@ -1,3 +1,5 @@
+% audioVector is a rowVector 
+% this function converts an audioMatrix To a Row Vector
 function [audioVector] = audioMatrixToVector(audioMatrix)
 
     [m,n] = size(audioMatrix);
@@ -6,7 +8,7 @@ function [audioVector] = audioMatrixToVector(audioMatrix)
             audioVector = mean(audioMatrix,2);    %if columns represent channels
             audioVector = audioVector';           %we wish to make it a row vector 
         elseif n==1
-            audioVector = audioMatrix;
+            audioVector = audioMatrix';           %we wish to make it a row vector
         end
     
     else %if m<n    we assume that m~=n

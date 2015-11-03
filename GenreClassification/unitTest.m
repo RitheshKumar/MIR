@@ -103,11 +103,11 @@ function unitTest(sampleFreq,windowSize,hopSize)
 		[val3,loc3]=max(nvt3);
 		PeakNovSpecFluxsig2=loc1*hopSize/fs;
 
-		[nvt2] = myPeakEnv(x1', windowSize, hopSize);
+		[nvt2] = myPeakEnv(x1, windowSize, hopSize);
 		[val4,loc4]=max(nvt2);
 		PeakNovEnvsig1=loc4*hopSize/fs;
 
-		[nvt4] = myPeakEnv(x2', windowSize, hopSize);
+		[nvt4] = myPeakEnv(x2, windowSize, hopSize);
 		[val4,loc4]=max(nvt4);
 		PeakNovEnvsig2=loc4*hopSize/fs;
 
