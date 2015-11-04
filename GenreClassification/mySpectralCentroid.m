@@ -11,6 +11,9 @@ function [spectralCentroid] = mySpectralCentroid (specMat)
     
 	for i = 1: length(specMat(1,:))
 		spectralCentroid(i) = sum(magnitudeSquared(:,i).*binIndex')/sum(magnitudeSquared(:,i));
+		if isnan ( spectralCentroid(i) )
+			spectralCentroid(i)  = 0;
+		end
 	end;
 end
 

@@ -7,6 +7,9 @@ function [spectralCrest] = mySpectralCrest (specMat)
     
 	for i = 1: length(specMat(1,:))
 		spectralCrest(i) = max(abs(specMat(:,i)))/sum(abs(specMat(:,i)));
+		if isnan ( spectralCrest(i) )
+			spectralCrest(i)  = 0;
+		end
 	end
 end
 
