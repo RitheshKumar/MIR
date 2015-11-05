@@ -5,7 +5,9 @@
 %   hopSize: int, number of samples per hop
 % output: 
 %   metaData: 10 by numFilesInDataset  float vector, the resulting feature matrix
-%   genre:    1  by numFilesInDataset  string vector, with genre classification
+%   genre:    1  by numFilesInDataset  string vector, with genre classified as numbers
+%   1 - Classical   2 - Country  3 - HipHop
+%   4 - Jazz        5 - Metal
 
 function [metaData , genre ] = getMetaData ( windowSize, hopSize)
 
@@ -28,7 +30,6 @@ function [metaData , genre ] = getMetaData ( windowSize, hopSize)
 	fileNames = D{1};
 	numFiles  = length ( fileNames );
 	metaData  = zeros (10, numFiles);
-	genre     = zeros (1 , numFiles);
 
 	for i = 1: numFiles 
 	
@@ -45,5 +46,10 @@ function [metaData , genre ] = getMetaData ( windowSize, hopSize)
 		end
 
 	end
+
+    numGenres = length (foldersInDataset);
+    genre     = 1:numGenres;
+    genre     = repmat  (genre, [numFiles/numGenres,1]);
+    genre     = reshape (genre, [1, numFiles] );
 
 end
