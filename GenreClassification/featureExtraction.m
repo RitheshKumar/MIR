@@ -8,8 +8,8 @@
 
 function featureExtraction( )
 
-	%[metaData , genre ] = getMetaData ( windowSize, hopSize)
-	load ( 'metaData.mat' );
+	[metaData , genre ] = getMetaData ( windowSize, hopSize);
+	%load ( 'metaData.mat' );
 
 	numFiles    = length ( metaData (1,:) );
 	numFeatures = length ( metaData (:,1) );

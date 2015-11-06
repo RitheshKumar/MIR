@@ -4,6 +4,7 @@
 %   testData:   testData is your vectorSet for testing, you have to estimate classes for these
 %   trainData:  trainData is your vectorSet for training
 %   trainLabel: the labels of your trainData 
+%   K         : no of neighbours
 % output: 
 %   estimatedClass: a vector giving genre estimates for each dataPoint in testData
 
@@ -29,8 +30,8 @@ function [estimatedClass] = myKNN (testData, trainData, trainLabel, K)
         % must definitely revise this part!! now I am just taking the minimum max occurence
         [~, sortIdx]           = sort (distance);
         labelIdx               = sortIdx(1:K);
-        kClasses               = trainLabel (labelIdx);
-        [~, estimatedClass(i)] = max (hist (kClasses, 5) );  % 5 since we have 5 classes
+        kClasses               = trainLabel (labelIdx);      % KClasses has 5 elements! (classes corresponding to 5 shortest distances)
+        [~, estimatedClass(i)] = max (hist (kClasses, [1:5] ) );  % 5 since we have 5 classes
         
     end
 
