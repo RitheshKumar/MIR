@@ -18,12 +18,16 @@ featureMatrix = metaData;
 iterIdx       = 1;
 K             = 5;
 
-numGenres     = 5;
-genre         = 1:numGenres;
-numFiles      = length ( featureMatrix (1,:) );
-genre         = repmat  (genre, [numFiles/numGenres,1]);
-genre         = reshape (genre, [1, numFiles] );
+windowSize    = 2048;
+hopSize       = 1024;
 
-[testData, trainData, trainLabel] = getTestSet (numFolds, featureMatrix, genre, iterIdx);
-[estimatedClass]                  = myKNN (testData, trainData, trainLabel, K);
+% numGenres     = 5;
+% genre         = 1:numGenres;
+% numFiles      = length ( featureMatrix (1,:) );
+% genre         = repmat  (genre, [numFiles/numGenres,1]);
+% genre         = reshape (genre, [1, numFiles] );
 
+% [testData, trainData, trainLabel]             = getTestSet (numFolds, featureMatrix, genre, iterIdx);
+% [estimatedClass]                              = myKNN (testData, trainData, trainLabel, K);
+[zScoreData,genre]                              = featureExtraction(windowSize, hopSize);
+[classAccuracy, TotalAccuracy, ConfusionMatrix] = CrossValidateNFolds(K, zScoreData, genre, numFolds);

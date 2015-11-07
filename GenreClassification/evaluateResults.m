@@ -7,10 +7,11 @@ clear all;
 clc;
 
 nof=10;
-K=3;
-features=rand(10,500);
-chk=ones(1,100);
-GroundTruth=[chk,2*chk,3*chk,4*chk,5*chk];
+K=7;
+% features=rand(10,500);
+% chk=ones(1,100);
+% GroundTruth=[chk,2*chk,3*chk,4*chk,5*chk];
+[features, GroundTruth] = featureExtraction(2048, 1024);
 [classAccuracy, TotalAccuracy, ConfusionMatrix]=CrossValidateNFolds(K, features, GroundTruth, nof);
 
 % sequential forward selection.. nedds to be evaluated with 10 fold cross validation
@@ -29,24 +30,32 @@ for i=1:numFeat
 end
 [val,loc]=max(FeatCombAccu);
 
-NewList=[NewList;featureList(loc)];
-AccuList=[AccuList;val];
-Accu_past=val;
 featureList=1:numFeat;
+NewList=[];
+NewList=[NewList;featureList(loc)];
+AccuList=[val];
+Accu_past=val;
+
 
 featureList(loc)=[];
+Accu_present=Accu_past+0.01;
 
-if Accu_past<Accu_present && isempty(featureList)~=1
+while Accu_past<Accu_present && isempty(featureList)~=1
     Accu_past=Accu_present;
     AccuArr=zeros(length(featureList),1);
     for iter=1:length(featureList)
         [~, AccuArr(iter), ~]=CrossValidateNFolds(K, [features(featureList(iter),:);features(NewList,:)], GroundTruth, nof);
     
     end
-    [Accu_present,loc]=max(AccuArr);
-    AccuList=[AccuList,Accu_present];
-    NewList=[NewList;featureList(loc)];
-    featureList(loc)=[];
+    
+    Accu_present=max(AccuArr);
+    if Accu_past<Accu_present
+        [Accu_present,loc]=max(AccuArr);
+        AccuList=[AccuList,Accu_present];
+        NewList=[NewList;featureList(loc)];
+        featureList(loc)=[];
+    end
+    
 end
 
 % end

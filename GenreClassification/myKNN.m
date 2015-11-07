@@ -23,16 +23,42 @@ function [estimatedClass] = myKNN (testData, trainData, trainLabel, K)
         for k = 1: numTrainPoints
             
             diffMat      = testVec - trainData (:, k);
-            distance (k) = sqrt (sum (diffMat).^2 );
+            distance (k) = sqrt (sum (diffMat.^2) );
 
         end
 
         % must definitely revise this part!! now I am just taking the minimum max occurence
-        [~, sortIdx]           = sort (distance);
+        [DistStore, sortIdx]           = sort (distance);
         labelIdx               = sortIdx(1:K);
-        kClasses               = trainLabel (labelIdx);      % KClasses has 5 elements! (classes corresponding to 5 shortest distances)
-        [~, estimatedClass(i)] = max (hist (kClasses, [1:5] ) );  % 5 since we have 5 classes
+        kClasses        = trainLabel (labelIdx);      % KClasses has 5 elements! (classes corresponding to 5 shortest distances)
+        ConcatDistLabel=[kClasses' DistStore(1:K)'];
+        SortedDistLabel=sortrows(ConcatDistLabel);
+        SortedDistLabel=SortedDistLabel';
+        LabelOccur = (hist (SortedDistLabel(1,:), [1:5] ) );  % 5 since we have 5 classes
+        LabelOccur=[LabelOccur;1:5];
+        SortedLabelOccur=sortrows(LabelOccur');
+        SortedLabelOccur=flip(SortedLabelOccur);
         
+        for j=1:length(SortedLabelOccur)-1
+            changeIdx=SortedLabelOccur(j,1)-SortedLabelOccur(j+1,1);
+            if changeIdx~=0
+                Idx=j;
+                break;
+            end
+        end
+        
+        if Idx==1
+            [~,estimatedClass(i)]=max(hist (SortedDistLabel(1,:), [1:5] ));
+        else
+            NewDist=[];
+            for k=1:Idx
+                Idxs=find(SortedDistLabel(1,:)==SortedLabelOccur(k,2));
+                NewDist(k)=mean(SortedDistLabel(2,Idxs));
+            end
+            [~, minIndx] = min(NewDist);
+            estimatedClass (i)  = SortedLabelOccur(minIndx,2);
+        end
+            
     end
 
 end

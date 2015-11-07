@@ -68,9 +68,9 @@ for iter=1:nof
     
     % call knn to get the estimated class
 %    [estimatedClass] = myKnn(testData, trainData, trainLabel, K);          
-    [estimatedClass] = myKnn(testData, trainData, trainLabel, K);          
+    [estimatedClass] = myKNN(testData, trainData, trainLabel, K);          
 
-    conf_mat=conf_mat+confusionmat(estimatedClass,testLabel);
+    conf_mat=conf_mat+confusionmat(testLabel, estimatedClass);
 end
 
 % Confusion matrix and accuracy

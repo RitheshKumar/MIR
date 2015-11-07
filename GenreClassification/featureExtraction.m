@@ -1,15 +1,20 @@
-%% Function: featureExtraction 
-%  featureExtraction (windowSize, hopSize)
+%% Function:  featureExtraction 
+%  [zScoreData, genre] = featureExtraction (windowSize, hopSize)
 % input: 
 %   windowSize: int, number of samples per block
 %   hopSize: int, number of samples per hop
 % output: 
 %   plots, visualization
+%   zScoreData: z-score normalized metaData 
+%   genre:      their corresponding genre labels
 
-function featureExtraction( )
+function [zScoreData, genre] = featureExtraction(windowSize, hopSize)
 
-	[metaData , genre ] = getMetaData ( windowSize, hopSize);
-	%load ( 'metaData.mat' );
+%  	[metaData , genre ] = getMetaData ( windowSize, hopSize);
+	load ( 'metaData.mat' );
+    genre     = 1:5;
+    genre     = repmat  (genre, [500/5,1]);
+    genre     = reshape (genre, [1, 500] );
 
 	numFiles    = length ( metaData (1,:) );
 	numFeatures = length ( metaData (:,1) );

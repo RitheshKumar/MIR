@@ -10,9 +10,5 @@ function [spectralFlux] = mySpectralFlux (specMat)
 	spectralFlux = sqrt(sum(SqrdDiff))./(length(specMat(:,1)));
 	spectralFlux=spectralFlux';
 
-	if sum(spectralFlux)~=0
-		spectralFlux = spectralFlux./max(spectralFlux);
-	end
-
 end
 
