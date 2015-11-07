@@ -3,19 +3,20 @@
 % input: 
 %   windowSize: int, number of samples per block
 %   hopSize: int, number of samples per hop
+%   datasetFolderPath: folder path to dataset as string arg
 % output: 
 %   plots, visualization
 %   zScoreData: z-score normalized metaData 
 %   genre:      their corresponding genre labels
 %   covMat:     covariance Matrix
 
-function [zScoreData, genre, covMat] = featureExtraction(windowSize, hopSize)
+function [zScoreData, genre, covMat] = featureExtraction(windowSize, hopSize, datasetFolderPath)
 
-%  	[metaData , genre ] = getMetaData ( windowSize, hopSize);
-	load ( 'metaData.mat' );
-    genre     = 1:5;
-    genre     = repmat  (genre, [500/5,1]);
-    genre     = reshape (genre, [1, 500] );
+ 	[metaData , genre ] = getMetaData ( windowSize, hopSize, datasetFolderPath);
+% 	load ( 'metaData.mat' );
+%     genre     = 1:5;
+%     genre     = repmat  (genre, [500/5,1]);
+%     genre     = reshape (genre, [1, 500] );
 
 	numFiles    = length ( metaData (1,:) );
 	numFeatures = length ( metaData (:,1) );

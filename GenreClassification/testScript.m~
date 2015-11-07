@@ -30,7 +30,7 @@ hopSize       = 1024;
 % [testData, trainData, trainLabel]             = getTestSet (numFolds, featureMatrix, genre, iterIdx);
 % [estimatedClass]                              = myKNN (testData, trainData, trainLabel, K);
 
-datasetFolderPath='/Users/Rithesh/Documents/3rd Sem/genres/';
+datasetFolderPath=' '/Users/Rithesh/Documents/3rd Sem/genres/';';
 [zScoreData,genre, covMat]                      = featureExtraction(windowSize, hopSize, datasetFolderPath);
 [classAccuracy, TotalAccuracy, ConfusionMatrix] = CrossValidateNFolds(K, zScoreData, genre, numFolds);
 

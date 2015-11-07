@@ -3,19 +3,20 @@
 % input: 
 %   windowSize: int, number of samples per block
 %   hopSize: int, number of samples per hop
+%   datasetFolderPath: string path of your dataset location
 % output: 
 %   metaData: 10 by numFilesInDataset  float vector, the resulting feature matrix
 %   genre:    1  by numFilesInDataset  string vector, with genre classified as numbers
 %   1 - Classical   2 - Country  3 - HipHop
 %   4 - Jazz        5 - Metal
 
-function [metaData , genre ] = getMetaData ( windowSize, hopSize)
+function [metaData , genre ] = getMetaData ( windowSize, hopSize, datasetFolderPath)
 
 	fileID=fopen('foldersInGenres.txt'); 
 	D = textscan(fileID,'%s','Delimiter', '\n', 'CollectOutput', true); 
 	foldersInDataset  = D{1};
 
-	datasetFolderPath = '/Users/Rithesh/Documents/3rd Sem/genres/';	
+% 	datasetFolderPath = '/Users/Rithesh/Documents/3rd Sem/genres/';	
 
 	for i = 1: length ( foldersInDataset )
 

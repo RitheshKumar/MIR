@@ -55,7 +55,7 @@ function [estimatedClass] = myKNN (testData, trainData, trainLabel, K)
                 Idxs=find(SortedDistLabel(1,:)==SortedLabelOccur(k,2));
                 NewDist(k)=mean(SortedDistLabel(2,Idxs));
             end
-            [~, minIndx] = min(NewDist);
+            [~, minIndx] = min(NewDist); % even if distances are same it will give the index corresponding to first occurance of the minimum
             estimatedClass (i)  = SortedLabelOccur(minIndx,2);
         end
             

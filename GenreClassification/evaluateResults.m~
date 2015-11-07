@@ -1,4 +1,4 @@
-function evaluateResults()
+% function [FeatureRanking, classAccuracy, TotalAccuracy, ConfusionMatrix] = evaluateResults(K, features, GroundTruth, nof)
 
 %10x500 feature matrix, 1x500 labels, 5 classes, 100 audios in each
 % nof=number of folds
@@ -7,7 +7,7 @@ clear all;
 clc;
 
 nof=10;
-K=3;
+K=7;
 % features=rand(10,500);
 % chk=ones(1,100);
 % GroundTruth=[chk,2*chk,3*chk,4*chk,5*chk];
@@ -44,9 +44,9 @@ Accu_present=Accu_past+0.01;
 while Accu_past<Accu_present && isempty(featureList)~=1
     Accu_past=Accu_present;
     AccuArr=zeros(length(featureList),1);
-    ConfusionMatrixFinal=cell(length(featureList),1);
+    ConfusionMatrixFinal=zeros(length(featureList),1);
     for iter=1:length(featureList)
-        [~, AccuArr(iter), ConfusionMatrixFinal{iter}]=CrossValidateNFolds(K, [features(featureList(iter),:);features(NewList,:)], GroundTruth, nof);
+        [~, AccuArr(iter), ConfusionMatrixFinal(iter)]=CrossValidateNFolds(K, [features(featureList(iter),:);features(NewList,:)], GroundTruth, nof);
     
     end
     
@@ -60,25 +60,14 @@ while Accu_past<Accu_present && isempty(featureList)~=1
     
 end
 
-% final feature combination confusion matrix
-[~,loc2]=max(AccuArr);
-FinalConfMat=ConfusionMatrixFinal{loc2};
-
 %forward selection plot
-plot(AccuList.*100);
+plot(AccuList);
 
-display('Single feature ranking result');
-display(val1*100);
-display('corresponding to feature number');
-display(loc1);
+display(['Single feature ranking result' val1 'corresponding to feature number' loc1]);
 display('Confusion Matrix');
 display(ConfusionMatrix);
 
-display('Best feature combination with')
-display(NewList)
-display('and the corresponding accuracy')
-display(AccuList(end)*100);
+display(['Best feature combination with' NewList 'and the corresponding accuracy' AccuList(end)]);
 display('Confusion Matrix');
-display(FinalConfMat);
 
-end
+% end
