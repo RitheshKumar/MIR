@@ -7,8 +7,9 @@
 %   plots, visualization
 %   zScoreData: z-score normalized metaData 
 %   genre:      their corresponding genre labels
+%   covMat:     covariance Matrix
 
-function [zScoreData, genre] = featureExtraction(windowSize, hopSize)
+function [zScoreData, genre, covMat] = featureExtraction(windowSize, hopSize)
 
 %  	[metaData , genre ] = getMetaData ( windowSize, hopSize);
 	load ( 'metaData.mat' );

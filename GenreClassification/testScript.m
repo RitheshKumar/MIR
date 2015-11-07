@@ -29,5 +29,21 @@ hopSize       = 1024;
 
 % [testData, trainData, trainLabel]             = getTestSet (numFolds, featureMatrix, genre, iterIdx);
 % [estimatedClass]                              = myKNN (testData, trainData, trainLabel, K);
-[zScoreData,genre]                              = featureExtraction(windowSize, hopSize);
+[zScoreData,genre, covMat]                      = featureExtraction(windowSize, hopSize);
 [classAccuracy, TotalAccuracy, ConfusionMatrix] = CrossValidateNFolds(K, zScoreData, genre, numFolds);
+
+% scatter plots! 
+plotMe ( zScoreData (3,:) , zScoreData (4,:) )
+title('SC (mean) Vs. SCR (mean)');
+
+plotMe ( zScoreData (7,:) , zScoreData (9,:) )
+title('SF (mean) Vs. ZCR (mean)');
+
+plotMe ( zScoreData (1,:) , zScoreData (2,:) )
+title('ME (mean) Vs. ME (std)');
+
+plotMe ( zScoreData (6,:) , zScoreData (10,:) )
+title('SCR(std) Vs. ZCR (std)');
+
+plotMe ( zScoreData (4,:) , zScoreData (8,:) )
+title('SC (std) Vs. SF (std)');
