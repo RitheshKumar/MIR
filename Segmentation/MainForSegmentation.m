@@ -36,10 +36,10 @@ for i=1:rwMFCC
 end
 
 % SDM for features
-featureMatrix=NormVPC';
+featureMatrix=NormVPC;
 [SDMVPC] = computeSelfDistMat(featureMatrix);
 
-featureMatrix=NormVMFCC';
+featureMatrix=NormVMFCC;
 [SDMVMFCC] = computeSelfDistMat(featureMatrix);
 
 
