@@ -3,7 +3,7 @@ close all;
 clc;
 
 % [audio,sampleFreq] = wavread('4notes_train.wav');
-[oldAudio,oldSampleFreq] = audioread('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/FingerprintingData/088 - The Temptations - My Girl.mp3');
+[oldAudio,oldSampleFreq] = audioread('/Users/Amruta/Documents/MS GTCMT/Sem1/Computational Music Analysis/Christina Perri - A Thousand Years.wav');
 
 % possible downsampling goes here
 % downSampleFactor =2;    

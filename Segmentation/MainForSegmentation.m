@@ -159,13 +159,13 @@ colormap gray;
 title('Binary SDM Chroma with threshold=0.4');
 
 %% erode dilate
-L=5;
-[SDM_edMFCC] = erodeDilate(Rmfcc, L);
+L=10;
+[SDM_edMFCC] = erodeDilate(SDM_binaryMFCC, L);
 figure;imagesc(SDM_edMFCC);
 colormap gray;
 title('Erosion on MFCC');
 
-[SDM_edvpc] = erodeDilate(Rvpc, L);
+[SDM_edvpc] = erodeDilate(SDM_binaryVPC, L);
 figure;imagesc(SDM_edvpc);
 colormap gray;
 title('Erosion on Chroma');
