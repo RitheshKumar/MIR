@@ -6,7 +6,7 @@ function [salientPeaks] = findSalientPeaks(specMat,pitchDistance,percentPeaksPer
     refFreq = f0*2.^(0:NDiv); % upper limit of the band :: goes till 6400
     refFreq = [0 , refFreq, 8000];
     
-    freqIndx = zeros(length(refFreq));
+    freqIndx = zeros(length(refFreq),1);
     for i= 1: length(refFreq)
         [~,freqIndx(i)] = min(abs(refFreq(i) - yFreq));
     end
