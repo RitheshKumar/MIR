@@ -38,10 +38,11 @@ end
 % SDM for features
 featureMatrix=NormVPC;
 [SDMVPC] = computeSelfDistMat(featureMatrix);
+figure;imagesc(SDMVPC);title('SDM with Chroma'); xlabel('Time (sec)'); ylabel('Time (sec)');
 
 featureMatrix=NormVMFCC;
 [SDMVMFCC] = computeSelfDistMat(featureMatrix);
-
+figure;imagesc(SDMVMFCC);title('SDM with MFCCs'); xlabel('Time (sec)'); ylabel('Time (sec)');
 
 %% novelty plotting
 % read annotation
@@ -54,7 +55,7 @@ time=round(time);
 L=2;
 [nvtVPC1] = computeSdmNovelty(SDMVPC, L);
 nvtVPC1=normalizeZeroToOne(nvtVPC1');
-figure; title('Novelty for Chroma');
+figure; title('Novelty for Chroma'); xlabel('Time (sec)');
 subplot(311); plot(nvtVPC1); title('L=2');
 for i=1:length(time)
    hold on;
@@ -86,12 +87,13 @@ for i=1:length(time)
    yval=[0 1];
    plot(xval,yval,'k');
 end
+xlabel('Time (sec)');
 
 L=2;
 [nvtMFCC1] = computeSdmNovelty(SDMVMFCC, L);
 nvtMFCC1=normalizeZeroToOne(nvtMFCC1');
 
-figure; title('Novelty for MFCCs');
+figure; title('Novelty for MFCCs'); xlabel('Time (sec)');
 subplot(311); plot(nvtMFCC1); title('L=2');
 for i=1:length(time)
    hold on;
@@ -123,13 +125,14 @@ for i=1:length(time)
    yval=[0 1];
    plot(xval,yval,'k');
 end
+xlabel('Time (sec)');
 
 %% Lag Distance Matrix
 Rvpc = computeLagDistMatrix(SDMVPC);
-figure; imagesc(Rvpc);title('Lag Distance Matrix with Chroma')
+figure; imagesc(Rvpc);title('Lag Distance Matrix with Chroma'); axis xy; xlabel('Time (sec)'); ylabel('Lag (sec)');
 
 Rmfcc = computeLagDistMatrix(SDMVMFCC);
-figure;imagesc(Rmfcc);title('Lag Distance Matrix with MFCCs');
+figure;imagesc(Rmfcc);title('Lag Distance Matrix with MFCCs'); axis xy; xlabel('Time (sec)'); ylabel('Lag (sec)');
 
 %% Binarization
 threshold=0.5;
@@ -148,24 +151,24 @@ threshold=0.5;
 
 NormSDMmfcc=(Rmfcc-min(min(Rmfcc)))./(max(max(Rmfcc))-min(min(Rmfcc)));
 [SDM_binaryMFCC] = computeBinSdm(NormSDMmfcc, 0.35);
-figure;imagesc(SDM_binaryMFCC);
+figure;imagesc(SDM_binaryMFCC); axis xy; xlabel('Time (sec)'); ylabel('Lag (sec)');
 colormap gray;
 title('Binary SDM MFCC with threshold=0.35');
 
 NormSDMvpc=(Rvpc-min(min(Rvpc)))./(max(max(Rvpc))-min(min(Rvpc)));
 [SDM_binaryVPC] = computeBinSdm(NormSDMvpc, 0.4);
-figure;imagesc(SDM_binaryVPC);
+figure;imagesc(SDM_binaryVPC); axis xy; xlabel('Time (sec)'); ylabel('Lag (sec)');
 colormap gray;
 title('Binary SDM Chroma with threshold=0.4');
 
 %% erode dilate
 L=10;
 [SDM_edMFCC] = erodeDilate(SDM_binaryMFCC, L);
-figure;imagesc(SDM_edMFCC);
+figure;imagesc(SDM_edMFCC); axis xy; xlabel('Time (sec)'); ylabel('Lag (sec)');
 colormap gray;
 title('Erosion on MFCC');
 
 [SDM_edvpc] = erodeDilate(SDM_binaryVPC, L);
-figure;imagesc(SDM_edvpc);
+figure;imagesc(SDM_edvpc); axis xy; xlabel('Time (sec)'); ylabel('Lag (sec)');
 colormap gray;
 title('Erosion on Chroma');
