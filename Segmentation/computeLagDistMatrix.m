@@ -14,9 +14,10 @@ R=zeros(rwSDM,clSDM);
 for i= 1:rwSDM
     for k = 1:clSDM
         if (i-k > 0)
-            R(i, i-k) = SDM( i, k);
+            R(i, i-k) = SDM( i, k);  %% x-axis,column == lag, y-axis, row == time
         end
     end
 end
+R =  R';
 end
 
