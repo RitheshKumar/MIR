@@ -1,6 +1,7 @@
 function evaluate ()
  
     addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/DanEllisCodes/audio/');
+    addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/FingerprintingData/');
     fileID=fopen('fileNames.txt'); 
 	D = textscan(fileID,'%s','Delimiter', '\n', 'CollectOutput', true); 
 
@@ -26,10 +27,12 @@ function evaluate ()
         [L,~]  = getLandMarks( specMat );   
         H      = getHashStruct( i, L );
         storeHashes( H );
-        
-        if mod (i,10) == 0
-			fprintf (' Completed %d%%', i*100/ numFiles ) ; 
-		end
+         
+%       if mod (i,10) == 0
+% 			fprintf (' Completed %d%%', i*100/ numFiles ) ; 
+% 		end
+
+        fprintf(' Stored %s', char( fileNames(i) ) );
 
     end
 
@@ -45,7 +48,7 @@ function evaluate ()
     H      = getHashStruct( i, L );
 
     songId = getSongId( H )
-%     disp(songId);
+
 
 end
 
