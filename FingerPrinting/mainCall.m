@@ -32,6 +32,20 @@ prcntPks  = 2/100;
 %% 
 load('maxes1.mat');
 load('theirSpec.mat');
-[L]  = getLandMarks( specMat );  %>> note that that our specMat has different magnitude from his! 
+[L,maxes]  = getLandMarks( specMat );  %>> note that that our specMat has different magnitude from his! 
 
-[~,~,~,maxes] = find_landmarks(audio,sampleFreq,5);
+[landy,~,~,maxy] = find_landmarks(audio,sampleFreq,5);
+
+%%
+H = getHashStruct( 5, L );
+Hy = landmark2hash( L, 5 );
+
+
+%%
+global hashTable hashCount
+
+hashTable = zeros( 20, 2^20); % maximum 20 entries per hash
+hashCount = zeros( 1,  2^20); % 2^20 cause our hash is a 20 bit structure
+
+%%
+storeHashes( H );
