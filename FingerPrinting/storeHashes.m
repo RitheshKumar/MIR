@@ -6,7 +6,7 @@ global hashTable hashCount
 
 numHashes = length( H( :, 1 ) );
 
-songInMin = 8;                %We assume that the song is of max length 8 mins
+songInMin = 8.5;                %We assume that the song is of max length 8 mins 30 secs
 songLen   = ( 60*songInMin - 0.064 ) / 0.032 ;
 
 for i = 1 : numHashes
