@@ -25,7 +25,21 @@ for i = 1: numHashes
 end
 
 [occ, ids]      = hist( idExtrct, unique(idExtrct) );
-[~, mxOccId ]   = max(occ);
-songId          = ids( mxOccId ); 
+occ             = (occ.*100)./sum(occ);                    % converting to percentage
+songId          = [ids; occ];
+
+%if we want first 10 matches
+[ ~ , ord]      = sort( songId(2,:), 'descend' );
+songId          = songId( :, ord );
+
+if length(songId(1,:)) > 10
+    songId = songId(:,1:10)';
+else
+    songId = songId';
+end
+
+% % if we want just first match
+% [~, mxOccId ]   = max(occ);
+% songId          = ids( mxOccId ); 
 
 end
