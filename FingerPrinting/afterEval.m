@@ -1,12 +1,19 @@
 %%
+addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/FingerprintingData/');
 addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/FingerprintingData/trainSet/');
+addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/FingerprintingData/testExcerpts/');
 
 fileID=fopen('fileNames.txt'); 
 D = textscan(fileID,'%s','Delimiter', '\n', 'CollectOutput', true); 
 load ('hashTable.mat'); load('hashCount.mat');
 fileNames = D{1};
 
-%%
+
+fileID=fopen('testFiles.txt'); 
+D = textscan(fileID,'%s','Delimiter', '\n', 'CollectOutput', true); 
+load ('hashTable.mat'); load('hashCount.mat');
+testFiles = D{1};
+
 sampleFreq = 8000; %not giving importance to High Frequency Content
 windowSize = 0.064; noverlap = 0.5;
 
@@ -35,18 +42,12 @@ songId = zeros( numFiles, 1 );
 %     save( 'songId.mat', 'songId');
 
 %% evaluate tests
-addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/FingerprintingData/testExcerpts/');
-
-fileID=fopen('testFiles.txt'); 
-D = textscan(fileID,'%s','Delimiter', '\n', 'CollectOutput', true); 
-load ('hashTable.mat'); load('hashCount.mat');
-testFiles = D{1};
 
 numTestFiles = length( testFiles );
 
 for i = 1:numTestFiles
 
-        [ audio, oldSampleFreq ] = audioread (char (testFiles (i) ) );  
+        [ audio, oldSampleFreq ] = audioread ( char(testFiles(i) ) );  
         audio = resample(audio,sampleFreq,oldSampleFreq);  %downsample to 8000Hz
 
         [specMat,~,~] = mySpectrogram(audio,sampleFreq,windowSize,noverlap);
@@ -54,7 +55,21 @@ for i = 1:numTestFiles
         [L,~]  = getLandMarks( specMat );   
         H      = getHashStruct( 0, L );
 
-        disp(testFiles(i));
+%         disp(testFiles(i));
         songId = getSongId( H )
 end
  
+
+%% impromptu test
+
+
+[ audio, oldSampleFreq ] = audioread ( '~/Desktop/nirvanaTest.wav' );  
+audio = resample(audio,sampleFreq,oldSampleFreq);  %downsample to 8000Hz
+
+[specMat,~,~] = mySpectrogram(audio,sampleFreq,windowSize,noverlap);
+
+[L,~]  = getLandMarks( specMat );   
+H      = getHashStruct( 0, L );
+
+        
+songId = getSongId( H )
