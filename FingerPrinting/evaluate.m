@@ -42,7 +42,7 @@ function evaluate ()
     songId = zeros( numFiles, 1 );
     for i = 1:numFiles
 
-        [ audio, oldSampleFreq ] = audioread (char (fileNames (i) ) );  % songID = 4
+        [ audio, oldSampleFreq ] = audioread (char (fileNames (i) ) ); 
 
         audio = resample(audio,sampleFreq,oldSampleFreq);  %downsample to 8000Hz
 
