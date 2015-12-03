@@ -1,7 +1,8 @@
 function evaluate ()
  
-    addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/DanEllisCodes/audio/');
-    addpath('/Users/Rithesh/Documents/MIR/Projects/FingerPrinting_Supplies/FingerprintingData/');
+
+    addpath('/Users/Rithesh/Documents/3rd Sem/DataSet/FingerprintingData/');
+
     fileID=fopen('fileNames.txt'); 
 	D = textscan(fileID,'%s','Delimiter', '\n', 'CollectOutput', true); 
 
@@ -27,27 +28,36 @@ function evaluate ()
         [L,~]  = getLandMarks( specMat );   
         H      = getHashStruct( i, L );
         storeHashes( H );
-         
-%       if mod (i,10) == 0
-% 			fprintf (' Completed %d%%', i*100/ numFiles ) ; 
-% 		end
 
-        fprintf(' Stored %s', char( fileNames(i) ) );
+        fprintf(' Stored %s\n', char( fileNames(i) ) );
 
     end
 
+    save( 'hashTable.mat', 'hashTable' );
+    save( 'hashCount.mat', 'hashCount' );
+
 
     %% evaluate
-    [ audio, oldSampleFreq ] = audioread (char (fileNames (20) ) );  % songID = 4
+    
+    songId = zeros( numFiles, 1 );
+    for i = 1:numFiles
 
-    audio = resample(audio,sampleFreq,oldSampleFreq);  %downsample to 8000Hz
+        [ audio, oldSampleFreq ] = audioread (char (fileNames (i) ) );  % songID = 4
 
-    [specMat,~,~] = mySpectrogram(audio,sampleFreq,windowSize,noverlap);
+        audio = resample(audio,sampleFreq,oldSampleFreq);  %downsample to 8000Hz
 
-    [L,~]  = getLandMarks( specMat );   
-    H      = getHashStruct( i, L );
+        [specMat,~,~] = mySpectrogram(audio,sampleFreq,windowSize,noverlap);
 
-    songId = getSongId( H )
+        [L,~]  = getLandMarks( specMat );   
+        H      = getHashStruct( i, L );
+
+        songId(i) = getSongId( H );
+
+        fprintf('Stored songId for %d\n', i );
+
+    end
+
+    save( 'songId.mat', 'songId');
 
 
 end
