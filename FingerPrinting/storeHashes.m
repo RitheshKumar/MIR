@@ -7,7 +7,7 @@ global hashTable hashCount
 numHashes = length( H( :, 1 ) );
 
 songInMin = 12;                %the longest song in the dataset is 11:40
-songLen   = ( 60*songInMin - 0.064 ) / 0.032 ;
+songLen   = ( 60*songInMin - 0.064 ) / 0.032 ; %timeFrames per song
 
 for i = 1 : numHashes
 
