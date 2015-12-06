@@ -49,9 +49,10 @@ function evaluate ()
         [specMat,~,~] = mySpectrogram(audio,sampleFreq,windowSize,noverlap);
 
         [L,~]  = getLandMarks( specMat );   
-        H      = getHashStruct( i, L );
+        H      = getHashStruct( 0, L );
 
-        songId(i) = getSongId( H );
+        matches   = getSongId( H );  % return the top 10 match along with percentage match
+        songId(i) = matches(1,1);    % we are storing only the song id of the first match
 
         fprintf('Stored songId for %d\n', i );
 

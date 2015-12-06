@@ -32,8 +32,8 @@ songId = zeros( numFiles, 1 );
         [L,~]  = getLandMarks( specMat );   
         H      = getHashStruct( 0, L );
 
-        songId(i) = getSongId( H );
-%         songId = getSongId( H )
+        matches   = getSongId( H );  % return the top 10 match along with percentage match
+        songId(i) = matches(1,1);    % we are storing only the song id of the first match
 
         fprintf('Stored songId for %d\n', i ); 
  
@@ -55,8 +55,8 @@ for i = 1:numTestFiles
         [L,~]  = getLandMarks( specMat );   
         H      = getHashStruct( 0, L );
 
-%         disp(testFiles(i));
-        songId = getSongId( H )
+        disp(testFiles(i));
+        songId = getSongId( H )   % output top 10 matches along with percentage match
 end
  
 
@@ -72,4 +72,4 @@ audio = resample(audio,sampleFreq,oldSampleFreq);  %downsample to 8000Hz
 H      = getHashStruct( 0, L );
 
         
-songId = getSongId( H )
+songId = getSongId( H )  % output top 10 matches along with percentage match
