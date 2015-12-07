@@ -2,6 +2,7 @@ function songId = getSongId ( H )
 
 %   getSongId from the input hashes
 %   H is hashStruct < songId tOffset hash > >>here songId is 0 for unknown
+%   songId - 2 columns matrix <songId  confidenceMatchInPercentage>
 
 global hashTable hashCount
 

@@ -1,11 +1,14 @@
 function [L,maxBck] = getLandMarks( specMat )
+% L       - LandMarks  < startTime, startFreq, endFreq, deltaTime > 
+% maxBck  - maxValues
+% specMat - spectrogram matrix
     
     numBins = length( specMat( :, 1 ) );         % num Time Frames
     numFrms = length( specMat( 1, : ) );         % num Freq Bins  
 
     specMat = abs( specMat );                    
     specMax = max( specMat(:) );                 % max every time Frame
-    specMat = log( max(specMax/1e6, specMat ) ); % >> us
+    specMat = log( max(specMax/1e6, specMat ) ); 
     specMat = specMat - mean( specMat(:) );      % make zero mean
 
     specMat = (filter([1 -1],[1 -0.98],specMat')'); %hpf 
@@ -13,10 +16,8 @@ function [L,maxBck] = getLandMarks( specMat )
     sprd    = 30;                           % spread of the gaussian window
     hashesPerSec = 5;
     gausDec = 1 - 0.01*(hashesPerSec/35);   % relates to hashes per sec
-    thresh  = thresholdCalc( max( specMat ( :, 1:10), []  , 2 ), sprd );
+    thresh  = thresholdCalc( max( specMat ( :, 1:10), []  , 2 ), sprd ); % calculate threshold from first 10 time frames
     
-    %L = thresh;
-    %Y = spread( max( specMat ( :, 1:10), []  , 2 ), sprd );
 
     pksPerFrame = 5;
     pksFnd      = 0;
@@ -46,7 +47,7 @@ function [L,maxBck] = getLandMarks( specMat )
                 maxFwd ( 2, maxCnt ) = ii;            % Bin Indx
                 maxFwd ( 3, maxCnt ) = peakVec( ii ); % Magnitude
             
-                %recalculate thresh >>why not use the same thing in thresholdCalc?
+                %recalculate thresh 
                 gausn  = exp( -0.5 * ( ( ( 1:length(thresh) ) - ii ) / sprd ).^2 );  %Gaussian with mean centred  
                                                                                      %around current peakIdx
                 thresh = max( thresh, gausn*peakVec( ii ) );
@@ -64,7 +65,7 @@ function [L,maxBck] = getLandMarks( specMat )
     maxBck = zeros( 2, maxIdx );
     bckCnt = 1; 
     %thresh  = thresholdCalc( max( specMat ( :, numFrames:-1:numFrames-9), []  , 2 ), sprd ); % Calc threshold from last 10 frames
-    thresh = thresholdCalc( specMat( :, numFrms ) , sprd ); %% >> check thresholdCalc!! This is the last bug spot! <<>> c'est bien! 
+    thresh = thresholdCalc( specMat( :, numFrms ) , sprd );  
 
     for i = numFrms:-1:1
     
@@ -111,10 +112,10 @@ function [L,maxBck] = getLandMarks( specMat )
         for ii = matchLocs
             landCnt = landCnt + 1;
 
-            L(landCnt, 1) = strT;
-            L(landCnt, 2) = maxBck( 2, i );   % >> should i store maxBck(2, i) in a var?
-            L(landCnt, 3) = maxBck( 2, ii );
-            L(landCnt, 4) = maxBck(1, ii ) - strT; % startTime
+            L(landCnt, 1) = strT;                   % startTime
+            L(landCnt, 2) = maxBck( 2, i );         % startFreq
+            L(landCnt, 3) = maxBck( 2, ii );        % endFreq
+            L(landCnt, 4) = maxBck(1, ii ) - strT;  % deltaTime
         end
     end
     
@@ -123,6 +124,10 @@ function [L,maxBck] = getLandMarks( specMat )
 end
 
 function thresh = thresholdCalc( vect, spread )
+% This function calculates a gaussian based threshold envelope
+% vect   - 1D vector based on which threshold envelope is to be constructed
+% spread - the main lobe width of the gaussian window
+% thresh - threshold envelope
    
     x        = 4*spread;
     gaussian = exp( -0.5 * ( (-x:x) / spread ).^2 );

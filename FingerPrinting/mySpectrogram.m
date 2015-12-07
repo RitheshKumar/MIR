@@ -1,4 +1,9 @@
 function [specMat,yFreq,xTime] = mySpectrogram(audio,sampleFreq,window,noverlap)
+% specMat - spectrogram matrix
+% yFreq   - freq values at bins
+% xTime   - time values at frames in seconds
+% window  - window size in seconds
+% noverlap- overlap from 0 to 1 
     
     [m,n] = size(audio);
     if m>n
@@ -7,7 +12,7 @@ function [specMat,yFreq,xTime] = mySpectrogram(audio,sampleFreq,window,noverlap)
         end
     
     else
-        audio = mean(audio);       %if rows represent channels
+        audio = mean(audio);          %if rows represent channels
     end
     
     nfft=round(window*sampleFreq*noverlap*2); %window size etc. in seconds

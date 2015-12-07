@@ -1,5 +1,6 @@
 function evaluate ()
  
+    %% build hashTable
 
     addpath('/Users/Rithesh/Documents/3rd Sem/DataSet/FingerprintingData/');
 
@@ -33,8 +34,9 @@ function evaluate ()
 
     end
 
-    save( 'hashTable.mat', 'hashTable' );
-    save( 'hashCount.mat', 'hashCount' );
+    % The following line have been commented out just so hashTable.mat & hashCount.mat are not rewritten 
+    %save( 'hashTable.mat', 'hashTable' );
+    %save( 'hashCount.mat', 'hashCount' );
 
 
     %% evaluate
