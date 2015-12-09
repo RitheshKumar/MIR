@@ -29,14 +29,21 @@ end
 occ             = (occ.*100)./sum(occ);                    % converting to percentage
 songId          = [ids; occ];
 
-%if we want first 10 matches
-[ ~ , ord]      = sort( songId(2,:), 'descend' );
-songId          = songId( :, ord );
 
-if length(songId(1,:)) > 10
-    songId = songId(:,1:10)';
+%if we want first 10 matches
+if isempty(songId)~=1
+
+    [ ~ , ord]  = sort( songId(2,:), 'descend' );
+    songId      = songId( :, ord );
+
+    if length(songId(1,:)) > 10
+        songId  = songId(:,1:10)';
+    else
+        songId  = songId';
+    end
+
 else
-    songId = songId';
+    songID      = [0 0];                                    % return zero if there are no matches at all
 end
 
 % % if we want just first match
